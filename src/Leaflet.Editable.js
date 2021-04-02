@@ -991,7 +991,7 @@
     // 🍂inherits BaseEditor
     // Editor for Marker.
     L.Editable.MarkerEditor = L.Editable.BaseEditor.extend({
-
+        
         onDrawingMouseMove: function (e) {
             L.Editable.BaseEditor.prototype.onDrawingMouseMove.call(this, e);
             if (this._drawing) this.feature.setLatLng(e.latlng);
@@ -1011,7 +1011,7 @@
             // no mousemove.
             if (e) this.feature._latlng = e.latlng;
             L.Editable.BaseEditor.prototype.connect.call(this, e);
-        }
+        }      
 
     });
 
@@ -1021,7 +1021,7 @@
     L.Editable.PathEditor = L.Editable.BaseEditor.extend({
 
         CLOSED: false,
-        MIN_VERTEX: 2,
+        MIN_VERTEX: 0, // wurde geändert, damit eine Polyline komplett über die Interaktion auf der Karte entfernt werden kann
 
         addHooks: function () {
             L.Editable.BaseEditor.prototype.addHooks.call(this);
@@ -1195,6 +1195,7 @@
             // 🍂section Vertex events
             // 🍂event editable:vertex:mouseout: VertexEvent
             // Fired when a user's mouse leaves the vertex
+            //console.log("In on Vertex Marker Mouseout"); // ######################################################################################################################################################
             this.fireAndForward('editable:vertex:mouseout', e);
         },
 
@@ -1513,7 +1514,7 @@
     L.Editable.PolygonEditor = L.Editable.PathEditor.extend({
 
         CLOSED: true,
-        MIN_VERTEX: 3,
+        MIN_VERTEX: 0, // wurde von 3 auf 0 geändert, damit ein Polygon komplett löschbar ist 
 
         newPointForward: function (latlng) {
             L.Editable.PathEditor.prototype.newPointForward.call(this, latlng);
